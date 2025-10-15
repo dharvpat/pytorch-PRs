@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 MPS Graph Cache Growth Simulation with Regularization, Dropout, and Pruning
 
