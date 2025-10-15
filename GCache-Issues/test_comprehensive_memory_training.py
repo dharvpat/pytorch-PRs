@@ -488,12 +488,6 @@ def train_model(model, model_type, device, epochs=3, batches=200, prune_every=20
 
             # Variable input shapes
             inputs = random_tensor(device, model_type=model_type)
-
-<<<<<<< HEAD
-=======
-            # KEY: DVDNet's exact per-sample loop pattern (trainer.py lines 291-295)
-            # This causes ~1 graph per sample = batch_size graphs per batch
->>>>>>> 766410038cf327b58d8a4f05f17faaf23325e272
             inputs = add_per_sample_noise(inputs, use_continuous=True)
 
             targets = torch.randint(0, 10, (inputs.size(0),), device=device)
