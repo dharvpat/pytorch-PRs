@@ -1,0 +1,30 @@
+
+======================================================================
+BASELINE VS FIXED COMPARISON
+======================================================================
+
+Driver Memory Growth:
+  Baseline: 0.0MB
+  Fixed:    0.0MB
+
+RSS Memory Growth (Activity Monitor):
+  Baseline: 3.5MB
+  Fixed:    4.2MB
+  Reduction: -0.7MB (-20.4%)
+
+Growth Rate per Batch:
+  Baseline Driver: 0.000MB/batch
+  Fixed Driver:    0.000MB/batch
+  Baseline RSS:    0.001MB/batch
+  Fixed RSS:       0.001MB/batch
+
+Fix Effectiveness:
+Traceback (most recent call last):
+  File "/Users/dharv/torch-source/test_memory_leak_fixes.py", line 1073, in <module>
+    main()
+  File "/Users/dharv/torch-source/test_memory_leak_fixes.py", line 1067, in main
+    compare_results(args.baseline, args.fixed)
+  File "/Users/dharv/torch-source/test_memory_leak_fixes.py", line 906, in compare_results
+    if driver_pct > 50 and rss_pct > 50:
+       ^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'driver_pct' where it is not associated with a value

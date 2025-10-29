@@ -1,0 +1,346 @@
+
+======================================================================
+MPS MEMORY LEAK TEST - Mode: FIXED
+======================================================================
+Testing fixes for Issues #2, #3, #4
+Device: mps
+Model: resnet
+Epochs: 10, Batches/epoch: 500
+Total batches: 5000
+
+Mode: FIXED - With cache clearing (simulates fixed PyTorch)
+Expected: Stable memory after warmup due to:
+  - Issue #2 fix: freeInactiveBuffers() called
+  - Issue #3 fix: Event pool cleared
+  - Issue #4 fix: Synchronization before cleanup
+======================================================================
+
+Initial memory state:
+  Driver: 16.4MB (+16.4MB) | Current: 0.4MB | RSS: 377.1MB (+377.1MB)
+
+======================================================================
+WARMUP PHASE
+======================================================================
+Starting warmup phase...
+Warmup complete (20 batches)
+
+Baseline established after warmup:
+  Driver: 34.9MB (+0.0MB) | Current: 0.9MB | RSS: 437.5MB (+0.0MB)
+
+======================================================================
+TRAINING PHASE
+======================================================================
+  Epoch 1/10, Batch 1/500 | Loss: 2.4064 | Time: 0.006s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 437.6MB (+0.1MB)
+  Epoch 1/10, Batch 21/500 | Loss: 2.3378 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 439.1MB (+1.6MB)
+  Epoch 1/10, Batch 41/500 | Loss: 2.3475 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 439.8MB (+2.2MB)
+  Epoch 1/10, Batch 61/500 | Loss: 2.3182 | Time: 0.016s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 441.0MB (+3.5MB)
+  Epoch 1/10, Batch 81/500 | Loss: 2.3372 | Time: 0.016s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 441.4MB (+3.8MB)
+  Epoch 1/10, Batch 101/500 | Loss: 2.3539 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 442.1MB (+4.6MB)
+  Epoch 1/10, Batch 121/500 | Loss: 2.3318 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 442.7MB (+5.2MB)
+  Epoch 1/10, Batch 141/500 | Loss: 2.3567 | Time: 0.022s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 441.0MB (+3.5MB)
+  Epoch 1/10, Batch 161/500 | Loss: 2.4041 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 443.1MB (+5.6MB)
+  Epoch 1/10, Batch 181/500 | Loss: 2.2886 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 444.9MB (+7.4MB)
+  Epoch 1/10, Batch 201/500 | Loss: 2.3014 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 445.9MB (+8.3MB)
+  Epoch 1/10, Batch 221/500 | Loss: 2.2789 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 446.0MB (+8.5MB)
+  Epoch 1/10, Batch 241/500 | Loss: 2.2996 | Time: 0.018s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 446.7MB (+9.1MB)
+  Epoch 1/10, Batch 261/500 | Loss: 2.2726 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 447.0MB (+9.5MB)
+  Epoch 1/10, Batch 281/500 | Loss: 2.3257 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 447.1MB (+9.5MB)
+  Epoch 1/10, Batch 301/500 | Loss: 2.3848 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 448.3MB (+10.7MB)
+  Epoch 1/10, Batch 321/500 | Loss: 2.2831 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 448.3MB (+10.8MB)
+  Epoch 1/10, Batch 341/500 | Loss: 2.3754 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 448.4MB (+10.8MB)
+  Epoch 1/10, Batch 361/500 | Loss: 2.3473 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 448.7MB (+11.1MB)
+  Epoch 1/10, Batch 381/500 | Loss: 2.3437 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 448.8MB (+11.2MB)
+  Epoch 1/10, Batch 401/500 | Loss: 2.3200 | Time: 0.018s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 449.2MB (+11.7MB)
+  Epoch 1/10, Batch 421/500 | Loss: 2.3158 | Time: 0.018s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 449.5MB (+12.0MB)
+  Epoch 1/10, Batch 441/500 | Loss: 2.2730 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 449.7MB (+12.1MB)
+  Epoch 1/10, Batch 461/500 | Loss: 2.3211 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 449.8MB (+12.2MB)
+  Epoch 1/10, Batch 481/500 | Loss: 2.3263 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 3.3MB | RSS: 450.1MB (+12.5MB)
+  Epoch 1/10, Batch 500/500 | Loss: 2.3165 | Time: 0.017s | Driver: 1098.9MB (+1064.0MB) | Current: 9.8MB | RSS: 450.2MB (+12.6MB)
+  └─ End-of-epoch cache clear: 0.0012s
+Epoch 1 complete in 8.52s
+  Epoch 2/10, Batch 1/500 | Loss: 2.3082 | Time: 0.006s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 450.1MB (+12.6MB)
+  Epoch 2/10, Batch 21/500 | Loss: 2.2965 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 450.5MB (+12.9MB)
+  Epoch 2/10, Batch 41/500 | Loss: 2.2598 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 450.7MB (+13.1MB)
+  Epoch 2/10, Batch 61/500 | Loss: 2.2440 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 450.7MB (+13.2MB)
+  Epoch 2/10, Batch 81/500 | Loss: 2.2924 | Time: 0.018s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 451.0MB (+13.4MB)
+  Epoch 2/10, Batch 101/500 | Loss: 2.2870 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 451.1MB (+13.5MB)
+  Epoch 2/10, Batch 121/500 | Loss: 2.3448 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 451.2MB (+13.6MB)
+  Epoch 2/10, Batch 141/500 | Loss: 2.2940 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 451.8MB (+14.3MB)
+  Epoch 2/10, Batch 161/500 | Loss: 2.2379 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 452.0MB (+14.5MB)
+  Epoch 2/10, Batch 181/500 | Loss: 2.3338 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 452.2MB (+14.6MB)
+  Epoch 2/10, Batch 201/500 | Loss: 2.3260 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 452.3MB (+14.7MB)
+  Epoch 2/10, Batch 221/500 | Loss: 2.3235 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 452.4MB (+14.8MB)
+  Epoch 2/10, Batch 241/500 | Loss: 2.2966 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 452.5MB (+15.0MB)
+  Epoch 2/10, Batch 261/500 | Loss: 2.3101 | Time: 0.018s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 452.6MB (+15.1MB)
+  Epoch 2/10, Batch 281/500 | Loss: 2.3150 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 452.8MB (+15.2MB)
+  Epoch 2/10, Batch 301/500 | Loss: 2.3328 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 452.9MB (+15.4MB)
+  Epoch 2/10, Batch 321/500 | Loss: 2.3099 | Time: 0.018s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 453.1MB (+15.6MB)
+  Epoch 2/10, Batch 341/500 | Loss: 2.2991 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 453.2MB (+15.7MB)
+  Epoch 2/10, Batch 361/500 | Loss: 2.3135 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 453.4MB (+15.8MB)
+  Epoch 2/10, Batch 381/500 | Loss: 2.3370 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 453.4MB (+15.8MB)
+  Epoch 2/10, Batch 401/500 | Loss: 2.3064 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 453.4MB (+15.9MB)
+  Epoch 2/10, Batch 421/500 | Loss: 2.2992 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 453.5MB (+15.9MB)
+  Epoch 2/10, Batch 441/500 | Loss: 2.3331 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 453.5MB (+16.0MB)
+  Epoch 2/10, Batch 461/500 | Loss: 2.3094 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 453.6MB (+16.1MB)
+  Epoch 2/10, Batch 481/500 | Loss: 2.2932 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 453.7MB (+16.2MB)
+  Epoch 2/10, Batch 500/500 | Loss: 2.2835 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 9.8MB | RSS: 453.9MB (+16.4MB)
+  └─ End-of-epoch cache clear: 0.0004s
+Epoch 2 complete in 8.53s
+  Epoch 3/10, Batch 1/500 | Loss: 2.3088 | Time: 0.010s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 453.9MB (+16.3MB)
+  Epoch 3/10, Batch 21/500 | Loss: 2.2936 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 454.3MB (+16.8MB)
+  Epoch 3/10, Batch 41/500 | Loss: 2.3250 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 454.4MB (+16.8MB)
+  Epoch 3/10, Batch 61/500 | Loss: 2.3231 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 454.5MB (+16.9MB)
+  Epoch 3/10, Batch 81/500 | Loss: 2.3166 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 454.5MB (+17.0MB)
+  Epoch 3/10, Batch 101/500 | Loss: 2.3262 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 454.7MB (+17.1MB)
+  Epoch 3/10, Batch 121/500 | Loss: 2.2911 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 454.8MB (+17.3MB)
+  Epoch 3/10, Batch 141/500 | Loss: 2.3008 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 454.9MB (+17.4MB)
+  Epoch 3/10, Batch 161/500 | Loss: 2.3004 | Time: 0.018s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 454.9MB (+17.4MB)
+  Epoch 3/10, Batch 181/500 | Loss: 2.3229 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 454.9MB (+17.4MB)
+  Epoch 3/10, Batch 201/500 | Loss: 2.3197 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 455.1MB (+17.5MB)
+  Epoch 3/10, Batch 221/500 | Loss: 2.2909 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 455.1MB (+17.6MB)
+  Epoch 3/10, Batch 241/500 | Loss: 2.2977 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 455.2MB (+17.7MB)
+  Epoch 3/10, Batch 261/500 | Loss: 2.2914 | Time: 0.018s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 455.3MB (+17.8MB)
+  Epoch 3/10, Batch 281/500 | Loss: 2.2972 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 455.3MB (+17.8MB)
+  Epoch 3/10, Batch 301/500 | Loss: 2.3022 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 455.4MB (+17.8MB)
+  Epoch 3/10, Batch 321/500 | Loss: 2.2915 | Time: 0.013s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 451.5MB (+13.9MB)
+  Epoch 3/10, Batch 341/500 | Loss: 2.2801 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 451.5MB (+14.0MB)
+  Epoch 3/10, Batch 361/500 | Loss: 2.2969 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 451.5MB (+14.0MB)
+  Epoch 3/10, Batch 381/500 | Loss: 2.3105 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 451.6MB (+14.1MB)
+  Epoch 3/10, Batch 401/500 | Loss: 2.3114 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 451.7MB (+14.1MB)
+  Epoch 3/10, Batch 421/500 | Loss: 2.3079 | Time: 0.018s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.0MB (+6.5MB)
+  Epoch 3/10, Batch 441/500 | Loss: 2.3094 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 440.9MB (+3.4MB)
+  Epoch 3/10, Batch 461/500 | Loss: 2.3234 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 441.0MB (+3.5MB)
+  Epoch 3/10, Batch 481/500 | Loss: 2.3133 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 441.1MB (+3.5MB)
+  Epoch 3/10, Batch 500/500 | Loss: 2.3248 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 9.8MB | RSS: 441.3MB (+3.8MB)
+  └─ End-of-epoch cache clear: 0.0009s
+Epoch 3 complete in 8.54s
+  Epoch 4/10, Batch 1/500 | Loss: 2.3087 | Time: 0.007s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 441.3MB (+3.7MB)
+  Epoch 4/10, Batch 21/500 | Loss: 2.3224 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 441.4MB (+3.9MB)
+  Epoch 4/10, Batch 41/500 | Loss: 2.2892 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 441.6MB (+4.1MB)
+  Epoch 4/10, Batch 61/500 | Loss: 2.3061 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 441.8MB (+4.2MB)
+  Epoch 4/10, Batch 81/500 | Loss: 2.2908 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 441.8MB (+4.3MB)
+  Epoch 4/10, Batch 101/500 | Loss: 2.3049 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 441.5MB (+4.0MB)
+  Epoch 4/10, Batch 121/500 | Loss: 2.3067 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 441.6MB (+4.0MB)
+  Epoch 4/10, Batch 141/500 | Loss: 2.3124 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 441.6MB (+4.0MB)
+  Epoch 4/10, Batch 161/500 | Loss: 2.3092 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 441.6MB (+4.1MB)
+  Epoch 4/10, Batch 181/500 | Loss: 2.3075 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 441.7MB (+4.2MB)
+  Epoch 4/10, Batch 201/500 | Loss: 2.3149 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 441.7MB (+4.2MB)
+  Epoch 4/10, Batch 221/500 | Loss: 2.3195 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 441.7MB (+4.2MB)
+  Epoch 4/10, Batch 241/500 | Loss: 2.3122 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 441.8MB (+4.2MB)
+  Epoch 4/10, Batch 261/500 | Loss: 2.2982 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 441.8MB (+4.2MB)
+  Epoch 4/10, Batch 281/500 | Loss: 2.3121 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 442.0MB (+4.5MB)
+  Epoch 4/10, Batch 301/500 | Loss: 2.3119 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 442.1MB (+4.5MB)
+  Epoch 4/10, Batch 321/500 | Loss: 2.3153 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 442.1MB (+4.6MB)
+  Epoch 4/10, Batch 341/500 | Loss: 2.2666 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 442.4MB (+4.8MB)
+  Epoch 4/10, Batch 361/500 | Loss: 2.2964 | Time: 0.018s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 442.4MB (+4.9MB)
+  Epoch 4/10, Batch 381/500 | Loss: 2.3127 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 442.5MB (+4.9MB)
+  Epoch 4/10, Batch 401/500 | Loss: 2.3242 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 442.5MB (+4.9MB)
+  Epoch 4/10, Batch 421/500 | Loss: 2.2916 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 442.5MB (+4.9MB)
+  Epoch 4/10, Batch 441/500 | Loss: 2.3127 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 442.5MB (+5.0MB)
+  Epoch 4/10, Batch 461/500 | Loss: 2.2800 | Time: 0.018s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 442.6MB (+5.0MB)
+  Epoch 4/10, Batch 481/500 | Loss: 2.3107 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 442.6MB (+5.0MB)
+  Epoch 4/10, Batch 500/500 | Loss: 2.3479 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 9.8MB | RSS: 442.6MB (+5.1MB)
+  └─ End-of-epoch cache clear: 0.0004s
+Epoch 4 complete in 8.53s
+  Epoch 5/10, Batch 1/500 | Loss: 2.3085 | Time: 0.008s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 442.6MB (+5.0MB)
+  Epoch 5/10, Batch 21/500 | Loss: 2.2813 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 443.5MB (+5.9MB)
+  Epoch 5/10, Batch 41/500 | Loss: 2.3191 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 443.5MB (+6.0MB)
+  Epoch 5/10, Batch 61/500 | Loss: 2.2906 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 443.7MB (+6.2MB)
+  Epoch 5/10, Batch 81/500 | Loss: 2.3073 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 443.7MB (+6.2MB)
+  Epoch 5/10, Batch 101/500 | Loss: 2.3069 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 443.9MB (+6.4MB)
+  Epoch 5/10, Batch 121/500 | Loss: 2.3023 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.1MB (+6.5MB)
+  Epoch 5/10, Batch 141/500 | Loss: 2.3083 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.1MB (+6.6MB)
+  Epoch 5/10, Batch 161/500 | Loss: 2.3046 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.2MB (+6.7MB)
+  Epoch 5/10, Batch 181/500 | Loss: 2.3169 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.4MB (+6.8MB)
+  Epoch 5/10, Batch 201/500 | Loss: 2.2929 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.4MB (+6.8MB)
+  Epoch 5/10, Batch 221/500 | Loss: 2.2987 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.4MB (+6.9MB)
+  Epoch 5/10, Batch 241/500 | Loss: 2.3203 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.5MB (+7.0MB)
+  Epoch 5/10, Batch 261/500 | Loss: 2.3165 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.4MB (+6.9MB)
+  Epoch 5/10, Batch 281/500 | Loss: 2.2988 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.5MB (+7.0MB)
+  Epoch 5/10, Batch 301/500 | Loss: 2.3023 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.6MB (+7.0MB)
+  Epoch 5/10, Batch 321/500 | Loss: 2.3134 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.6MB (+7.0MB)
+  Epoch 5/10, Batch 341/500 | Loss: 2.3231 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.6MB (+7.0MB)
+  Epoch 5/10, Batch 361/500 | Loss: 2.2989 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.7MB (+7.1MB)
+  Epoch 5/10, Batch 381/500 | Loss: 2.3051 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.7MB (+7.1MB)
+  Epoch 5/10, Batch 401/500 | Loss: 2.2990 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.7MB (+7.1MB)
+  Epoch 5/10, Batch 421/500 | Loss: 2.3274 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.7MB (+7.2MB)
+  Epoch 5/10, Batch 441/500 | Loss: 2.3165 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.7MB (+7.2MB)
+  Epoch 5/10, Batch 461/500 | Loss: 2.3005 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.8MB (+7.2MB)
+  Epoch 5/10, Batch 481/500 | Loss: 2.2975 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 444.8MB (+7.2MB)
+  Epoch 5/10, Batch 500/500 | Loss: 2.3024 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 9.8MB | RSS: 385.9MB (-51.6MB)
+  └─ End-of-epoch cache clear: 0.0004s
+Epoch 5 complete in 8.58s
+  Epoch 6/10, Batch 1/500 | Loss: 2.3228 | Time: 0.006s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 385.9MB (-51.7MB)
+  Epoch 6/10, Batch 21/500 | Loss: 2.2923 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 386.2MB (-51.3MB)
+  Epoch 6/10, Batch 41/500 | Loss: 2.2948 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 386.8MB (-50.8MB)
+  Epoch 6/10, Batch 61/500 | Loss: 2.3080 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 387.0MB (-50.6MB)
+  Epoch 6/10, Batch 81/500 | Loss: 2.3075 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 387.3MB (-50.3MB)
+  Epoch 6/10, Batch 101/500 | Loss: 2.2984 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 387.4MB (-50.1MB)
+  Epoch 6/10, Batch 121/500 | Loss: 2.3035 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 372.2MB (-65.4MB)
+  Epoch 6/10, Batch 141/500 | Loss: 2.2936 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 352.2MB (-85.3MB)
+  Epoch 6/10, Batch 161/500 | Loss: 2.3208 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 329.7MB (-107.9MB)
+  Epoch 6/10, Batch 181/500 | Loss: 2.2889 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 315.8MB (-121.8MB)
+  Epoch 6/10, Batch 201/500 | Loss: 2.3101 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 315.8MB (-121.7MB)
+  Epoch 6/10, Batch 221/500 | Loss: 2.3017 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 315.9MB (-121.7MB)
+  Epoch 6/10, Batch 241/500 | Loss: 2.3015 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 315.9MB (-121.6MB)
+  Epoch 6/10, Batch 261/500 | Loss: 2.3184 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 316.1MB (-121.5MB)
+  Epoch 6/10, Batch 281/500 | Loss: 2.2881 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 316.1MB (-121.5MB)
+  Epoch 6/10, Batch 301/500 | Loss: 2.2867 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 316.2MB (-121.4MB)
+  Epoch 6/10, Batch 321/500 | Loss: 2.3034 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 316.4MB (-121.2MB)
+  Epoch 6/10, Batch 341/500 | Loss: 2.3058 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 316.5MB (-121.1MB)
+  Epoch 6/10, Batch 361/500 | Loss: 2.3101 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 316.6MB (-121.0MB)
+  Epoch 6/10, Batch 381/500 | Loss: 2.2904 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 316.8MB (-120.7MB)
+  Epoch 6/10, Batch 401/500 | Loss: 2.3014 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 316.9MB (-120.7MB)
+  Epoch 6/10, Batch 421/500 | Loss: 2.3084 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 316.9MB (-120.6MB)
+  Epoch 6/10, Batch 441/500 | Loss: 2.3166 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 317.1MB (-120.5MB)
+  Epoch 6/10, Batch 461/500 | Loss: 2.3063 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 317.2MB (-120.3MB)
+  Epoch 6/10, Batch 481/500 | Loss: 2.3135 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 317.3MB (-120.3MB)
+  Epoch 6/10, Batch 500/500 | Loss: 2.3195 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 9.8MB | RSS: 317.4MB (-120.2MB)
+  └─ End-of-epoch cache clear: 0.0007s
+Epoch 6 complete in 8.52s
+  Epoch 7/10, Batch 1/500 | Loss: 2.3005 | Time: 0.012s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 317.3MB (-120.2MB)
+  Epoch 7/10, Batch 21/500 | Loss: 2.2938 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 259.8MB (-177.8MB)
+  Epoch 7/10, Batch 41/500 | Loss: 2.3123 | Time: 0.018s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 215.6MB (-221.9MB)
+  Epoch 7/10, Batch 61/500 | Loss: 2.3231 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 208.8MB (-228.8MB)
+  Epoch 7/10, Batch 81/500 | Loss: 2.2941 | Time: 0.005s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 176.3MB (-261.3MB)
+  Epoch 7/10, Batch 101/500 | Loss: 2.3120 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 176.4MB (-261.2MB)
+  Epoch 7/10, Batch 121/500 | Loss: 2.3159 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 176.5MB (-261.1MB)
+  Epoch 7/10, Batch 141/500 | Loss: 2.3203 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 176.7MB (-260.9MB)
+  Epoch 7/10, Batch 161/500 | Loss: 2.2948 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 176.7MB (-260.8MB)
+  Epoch 7/10, Batch 181/500 | Loss: 2.3053 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 176.8MB (-260.7MB)
+  Epoch 7/10, Batch 201/500 | Loss: 2.2966 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 177.0MB (-260.6MB)
+  Epoch 7/10, Batch 221/500 | Loss: 2.3019 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 177.0MB (-260.6MB)
+  Epoch 7/10, Batch 241/500 | Loss: 2.3364 | Time: 0.007s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 177.1MB (-260.5MB)
+  Epoch 7/10, Batch 261/500 | Loss: 2.2955 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 177.1MB (-260.5MB)
+  Epoch 7/10, Batch 281/500 | Loss: 2.2921 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 177.2MB (-260.3MB)
+  Epoch 7/10, Batch 301/500 | Loss: 2.2950 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 177.3MB (-260.2MB)
+  Epoch 7/10, Batch 321/500 | Loss: 2.2977 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 177.5MB (-260.1MB)
+  Epoch 7/10, Batch 341/500 | Loss: 2.3164 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 177.5MB (-260.1MB)
+  Epoch 7/10, Batch 361/500 | Loss: 2.2765 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 177.5MB (-260.0MB)
+  Epoch 7/10, Batch 381/500 | Loss: 2.3116 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 177.6MB (-259.9MB)
+  Epoch 7/10, Batch 401/500 | Loss: 2.3110 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 177.7MB (-259.8MB)
+  Epoch 7/10, Batch 421/500 | Loss: 2.2896 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 177.8MB (-259.7MB)
+  Epoch 7/10, Batch 441/500 | Loss: 2.3115 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 177.9MB (-259.7MB)
+  Epoch 7/10, Batch 461/500 | Loss: 2.2897 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 177.9MB (-259.6MB)
+  Epoch 7/10, Batch 481/500 | Loss: 2.3137 | Time: 0.018s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.0MB (-259.6MB)
+  Epoch 7/10, Batch 500/500 | Loss: 2.3118 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 9.8MB | RSS: 178.0MB (-259.6MB)
+  └─ End-of-epoch cache clear: 0.0007s
+Epoch 7 complete in 8.54s
+  Epoch 8/10, Batch 1/500 | Loss: 2.2961 | Time: 0.010s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 177.9MB (-259.6MB)
+  Epoch 8/10, Batch 21/500 | Loss: 2.3000 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.0MB (-259.5MB)
+  Epoch 8/10, Batch 41/500 | Loss: 2.2844 | Time: 0.018s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.1MB (-259.5MB)
+  Epoch 8/10, Batch 61/500 | Loss: 2.3344 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.1MB (-259.4MB)
+  Epoch 8/10, Batch 81/500 | Loss: 2.2807 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.8MB (-258.8MB)
+  Epoch 8/10, Batch 101/500 | Loss: 2.2776 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.8MB (-258.8MB)
+  Epoch 8/10, Batch 121/500 | Loss: 2.2953 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.8MB (-258.7MB)
+  Epoch 8/10, Batch 141/500 | Loss: 2.2875 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.9MB (-258.7MB)
+  Epoch 8/10, Batch 161/500 | Loss: 2.3164 | Time: 0.012s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.5MB (-259.1MB)
+  Epoch 8/10, Batch 181/500 | Loss: 2.2987 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.5MB (-259.0MB)
+  Epoch 8/10, Batch 201/500 | Loss: 2.3128 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.7MB (-258.9MB)
+  Epoch 8/10, Batch 221/500 | Loss: 2.3010 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.8MB (-258.8MB)
+  Epoch 8/10, Batch 241/500 | Loss: 2.3114 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.8MB (-258.7MB)
+  Epoch 8/10, Batch 261/500 | Loss: 2.3060 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.9MB (-258.6MB)
+  Epoch 8/10, Batch 281/500 | Loss: 2.3191 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.9MB (-258.6MB)
+  Epoch 8/10, Batch 301/500 | Loss: 2.3029 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 179.0MB (-258.6MB)
+  Epoch 8/10, Batch 321/500 | Loss: 2.3047 | Time: 0.018s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 179.1MB (-258.4MB)
+  Epoch 8/10, Batch 341/500 | Loss: 2.3047 | Time: 0.018s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 179.3MB (-258.3MB)
+  Epoch 8/10, Batch 361/500 | Loss: 2.2995 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 179.3MB (-258.2MB)
+  Epoch 8/10, Batch 381/500 | Loss: 2.2974 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 179.4MB (-258.1MB)
+  Epoch 8/10, Batch 401/500 | Loss: 2.3104 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 179.5MB (-258.0MB)
+  Epoch 8/10, Batch 421/500 | Loss: 2.2943 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 179.5MB (-258.0MB)
+  Epoch 8/10, Batch 441/500 | Loss: 2.3011 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 179.6MB (-257.9MB)
+  Epoch 8/10, Batch 461/500 | Loss: 2.2963 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 179.7MB (-257.9MB)
+  Epoch 8/10, Batch 481/500 | Loss: 2.3078 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 179.7MB (-257.8MB)
+  Epoch 8/10, Batch 500/500 | Loss: 2.2959 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 9.8MB | RSS: 179.7MB (-257.8MB)
+  └─ End-of-epoch cache clear: 0.0007s
+Epoch 8 complete in 8.54s
+  Epoch 9/10, Batch 1/500 | Loss: 2.3172 | Time: 0.011s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 179.7MB (-257.9MB)
+  Epoch 9/10, Batch 21/500 | Loss: 2.2985 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 179.8MB (-257.8MB)
+  Epoch 9/10, Batch 41/500 | Loss: 2.2918 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 179.9MB (-257.7MB)
+  Epoch 9/10, Batch 61/500 | Loss: 2.3022 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 180.7MB (-256.8MB)
+  Epoch 9/10, Batch 81/500 | Loss: 2.3158 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 181.0MB (-256.5MB)
+  Epoch 9/10, Batch 101/500 | Loss: 2.3041 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 181.1MB (-256.5MB)
+  Epoch 9/10, Batch 121/500 | Loss: 2.3073 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 181.1MB (-256.5MB)
+  Epoch 9/10, Batch 141/500 | Loss: 2.2902 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 181.2MB (-256.3MB)
+  Epoch 9/10, Batch 161/500 | Loss: 2.3044 | Time: 0.019s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 181.2MB (-256.3MB)
+  Epoch 9/10, Batch 181/500 | Loss: 2.2988 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 181.4MB (-256.1MB)
+  Epoch 9/10, Batch 201/500 | Loss: 2.2869 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 181.5MB (-256.1MB)
+  Epoch 9/10, Batch 221/500 | Loss: 2.3036 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 181.6MB (-256.0MB)
+  Epoch 9/10, Batch 241/500 | Loss: 2.2986 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 181.5MB (-256.1MB)
+  Epoch 9/10, Batch 261/500 | Loss: 2.2883 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 181.5MB (-256.1MB)
+  Epoch 9/10, Batch 281/500 | Loss: 2.3099 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 181.5MB (-256.0MB)
+  Epoch 9/10, Batch 301/500 | Loss: 2.2929 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 181.6MB (-256.0MB)
+  Epoch 9/10, Batch 321/500 | Loss: 2.2983 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 181.6MB (-256.0MB)
+  Epoch 9/10, Batch 341/500 | Loss: 2.2872 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 181.8MB (-255.8MB)
+  Epoch 9/10, Batch 361/500 | Loss: 2.2946 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 181.8MB (-255.7MB)
+  Epoch 9/10, Batch 381/500 | Loss: 2.3267 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 181.9MB (-255.7MB)
+  Epoch 9/10, Batch 401/500 | Loss: 2.3182 | Time: 0.019s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 182.0MB (-255.6MB)
+  Epoch 9/10, Batch 421/500 | Loss: 2.3045 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 182.0MB (-255.5MB)
+  Epoch 9/10, Batch 441/500 | Loss: 2.2925 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 182.0MB (-255.5MB)
+  Epoch 9/10, Batch 461/500 | Loss: 2.3140 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 182.1MB (-255.4MB)
+  Epoch 9/10, Batch 481/500 | Loss: 2.3067 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 182.4MB (-255.2MB)
+  Epoch 9/10, Batch 500/500 | Loss: 2.3111 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 9.8MB | RSS: 182.4MB (-255.1MB)
+  └─ End-of-epoch cache clear: 0.0006s
+Epoch 9 complete in 8.57s
+  Epoch 10/10, Batch 1/500 | Loss: 2.3052 | Time: 0.010s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 182.4MB (-255.2MB)
+  Epoch 10/10, Batch 21/500 | Loss: 2.3134 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 182.7MB (-254.9MB)
+  Epoch 10/10, Batch 41/500 | Loss: 2.2985 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 182.7MB (-254.9MB)
+  Epoch 10/10, Batch 61/500 | Loss: 2.3022 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 182.8MB (-254.8MB)
+  Epoch 10/10, Batch 81/500 | Loss: 2.3023 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 182.8MB (-254.8MB)
+  Epoch 10/10, Batch 101/500 | Loss: 2.3024 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 182.8MB (-254.8MB)
+  Epoch 10/10, Batch 121/500 | Loss: 2.3034 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 180.4MB (-257.1MB)
+  Epoch 10/10, Batch 141/500 | Loss: 2.3117 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 180.4MB (-257.1MB)
+  Epoch 10/10, Batch 161/500 | Loss: 2.3115 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.4MB (-259.2MB)
+  Epoch 10/10, Batch 181/500 | Loss: 2.3117 | Time: 0.018s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.4MB (-259.2MB)
+  Epoch 10/10, Batch 201/500 | Loss: 2.3105 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.4MB (-259.2MB)
+  Epoch 10/10, Batch 221/500 | Loss: 2.3118 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.4MB (-259.1MB)
+  Epoch 10/10, Batch 241/500 | Loss: 2.2883 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.5MB (-259.1MB)
+  Epoch 10/10, Batch 261/500 | Loss: 2.2944 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.8MB (-258.8MB)
+  Epoch 10/10, Batch 281/500 | Loss: 2.3031 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.9MB (-258.6MB)
+  Epoch 10/10, Batch 301/500 | Loss: 2.3031 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.9MB (-258.6MB)
+  Epoch 10/10, Batch 321/500 | Loss: 2.3151 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 179.4MB (-258.1MB)
+  Epoch 10/10, Batch 341/500 | Loss: 2.3031 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.2MB (-259.3MB)
+  Epoch 10/10, Batch 361/500 | Loss: 2.2925 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.2MB (-259.3MB)
+  Epoch 10/10, Batch 381/500 | Loss: 2.3110 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.4MB (-259.2MB)
+  Epoch 10/10, Batch 401/500 | Loss: 2.2988 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.4MB (-259.2MB)
+  Epoch 10/10, Batch 421/500 | Loss: 2.3074 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.5MB (-259.0MB)
+  Epoch 10/10, Batch 441/500 | Loss: 2.3149 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.7MB (-258.9MB)
+  Epoch 10/10, Batch 461/500 | Loss: 2.2961 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.7MB (-258.9MB)
+  Epoch 10/10, Batch 481/500 | Loss: 2.2896 | Time: 0.017s | Driver: 1066.9MB (+1032.0MB) | Current: 3.3MB | RSS: 178.7MB (-258.8MB)
+  Epoch 10/10, Batch 500/500 | Loss: 2.2988 | Time: 0.016s | Driver: 1066.9MB (+1032.0MB) | Current: 9.8MB | RSS: 178.9MB (-258.6MB)
+  └─ End-of-epoch cache clear: 0.0004s
+Epoch 10 complete in 8.64s
+
+======================================================================
+FINAL CLEANUP
+======================================================================
+Synchronizing GPU...
+Clearing cache...
+
+Final memory state:
+  Driver: 34.9MB (+0.0MB) | Current: 0.9MB | RSS: 310.7MB (-126.9MB)
+
+======================================================================
+SUMMARY
+======================================================================
+
+Memory Growth:
+  Driver Memory: 1098.9MB → 1066.9MB (+-32.0MB)
+  RSS (Activity Monitor): 437.6MB → 178.9MB (+-258.7MB)
+
+Growth Rates:
+  Driver: -0.006MB/batch
+  RSS: -0.052MB/batch
+
+Cache Clearing:
+  Total clears: 10
+  Total time: 0.01s
+  Average time: 0.0007s
+
+Diagnosis:
+  ✅ PASS: Memory stable (fixes working!)
+     Issues #2, #3, #4 are properly fixed
+======================================================================
+
+✅ Results saved to: test_results_20251027_110740/fixed_resnet_20251027_110740.json
+
