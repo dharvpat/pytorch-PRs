@@ -488,6 +488,10 @@ def train_model(model, model_type, device, epochs=3, batches=200, prune_every=20
 
             # Variable input shapes
             inputs = random_tensor(device, model_type=model_type)
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
             inputs = add_per_sample_noise(inputs, use_continuous=True)
 
             targets = torch.randint(0, 10, (inputs.size(0),), device=device)
